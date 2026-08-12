@@ -4,11 +4,11 @@
 
 from __future__ import annotations
 
-import netCDF4 as nc
 import numpy as np
 import pytest
 
 from landmetrics import data
+from landmetrics._reader import WindowReader
 from landmetrics.query import _MAX_WINDOW_CELLS, DistanceToLand, LandFraction
 
 
@@ -98,16 +98,31 @@ def test_never_reads_more_than_budget(monkeypatch, tiny_distance_grid, tiny_frac
     """Regression guard: no read this package performs, at any call size,
     may slice more than _MAX_WINDOW_CELLS elements out of a netCDF
     variable -- if a future change accidentally reverts to loading a
-    whole grid, this fails immediately instead of merely being slow."""
-    original_getitem = nc.Variable.__getitem__
+    whole grid, this fails immediately instead of merely being slow.
 
-    def _bounded_getitem(self, key):
-        result = original_getitem(self, key)
+    Patches WindowReader's own read methods (plain Python, always
+    patchable) rather than netCDF4.Variable.__getitem__ directly --
+    netCDF4's Variable is a C-extension type that some platform/version
+    builds (observed on macOS + Python 3.10 in CI) refuse to patch at
+    all, raising TypeError. Every read this package performs already
+    funnels through these two methods, so the guarantee is identical."""
+    original_read_2x2 = WindowReader.read_2x2
+    original_read_block = WindowReader.read_block
+
+    def _bounded_read_2x2(self, *args, **kwargs):
+        result = original_read_2x2(self, *args, **kwargs)
         size = np.asarray(result).size
         assert size <= _MAX_WINDOW_CELLS, f"read {size} cells, budget is {_MAX_WINDOW_CELLS}"
         return result
 
-    monkeypatch.setattr(nc.Variable, "__getitem__", _bounded_getitem)
+    def _bounded_read_block(self, *args, **kwargs):
+        result = original_read_block(self, *args, **kwargs)
+        size = np.asarray(result).size
+        assert size <= _MAX_WINDOW_CELLS, f"read {size} cells, budget is {_MAX_WINDOW_CELLS}"
+        return result
+
+    monkeypatch.setattr(WindowReader, "read_2x2", _bounded_read_2x2)
+    monkeypatch.setattr(WindowReader, "read_block", _bounded_read_block)
 
     rng = np.random.default_rng(35)
     with DistanceToLand(tiny_distance_grid) as dtl:
