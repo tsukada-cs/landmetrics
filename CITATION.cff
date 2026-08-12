@@ -1,0 +1,31 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: landmetrics
+type: software
+version: 0.1.0
+authors:
+  - family-names: Tsukada
+    given-names: Taiga
+license: MIT
+repository-code: "https://github.com/tsukada-cs/landmetrics"
+keywords:
+  - GIS
+  - coastline
+  - GSHHG
+  - land fraction
+  - distance to land
+references:
+  - type: article
+    authors:
+      - family-names: Wessel
+        given-names: Paul
+      - family-names: Smith
+        given-names: Walter H. F.
+    title: "A global, self-consistent, hierarchical, high-resolution shoreline database"
+    journal: "Journal of Geophysical Research"
+    volume: 101
+    issue: B4
+    start: 8741
+    end: 8743
+    year: 1996
+    doi: 10.1029/96JB00104

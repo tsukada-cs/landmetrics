@@ -1,0 +1,26 @@
+{
+  "title": "landmetrics",
+  "description": "Distance to land, land fraction within radius, and land/ocean tests from GSHHG coastlines.",
+  "creators": [
+    {
+      "name": "Tsukada, Taiga"
+    }
+  ],
+  "license": "MIT",
+  "upload_type": "software",
+  "keywords": [
+    "GIS",
+    "coastline",
+    "GSHHG",
+    "land fraction",
+    "distance to land",
+    "python"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "10.1029/96JB00104",
+      "relation": "isDerivedFrom",
+      "resource_type": "publication-article"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+Data license for the grid files bundled with and distributed alongside
+landmetrics (distance_to_land_*.nc, land_fraction_*.nc).
+
+These files are derived from GSHHG (Global Self-consistent, Hierarchical,
+High-resolution Geography):
+
+    Wessel, P., and W. H. F. Smith (1996), A global, self-consistent,
+    hierarchical, high-resolution shoreline database, J. Geophys. Res.,
+    101(B4), 8741-8743, doi:10.1029/96JB00104.
+    https://www.soest.hawaii.edu/pwessel/gshhg/
+
+GSHHG is released under the GNU Lesser General Public License (LGPL). This
+derived dataset -- a rasterized distance/fraction grid computed from GSHHG's
+coastline polygons -- is redistributed under the GNU Lesser General Public
+License, version 3 or later (LGPL-3.0-or-later):
+
+    https://www.gnu.org/licenses/lgpl-3.0.html
+
+A complete, reproducible description of how these grids were derived from
+the source GSHHG polygons -- coastline levels used, the nearest-coastline
+distance method, the land-fraction estimation method, and the file schema
+itself -- is given in docs/grid_format.md. The code that queries these grids
+(this package) is source-available under the MIT license (see LICENSE); the
+grid *generation* code that produced these specific files is not published,
+but the method is fully described so an equivalent derivation could be
+reproduced independently from the same public GSHHG source data.
