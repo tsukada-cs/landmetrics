@@ -88,7 +88,9 @@ budget regardless of the underlying grid's resolution. See
 |---|---|---|---|
 | `distance_to_land` | 0.1 deg | 0 km^2 | yes |
 | `land_fraction` | 0.1 deg | 0 km^2 | yes |
-| `distance_to_land` / `land_fraction` | 0.05, 0.01 deg | 0, 1400, 4748 km^2 | fetched from Zenodo |
+| `distance_to_land` | 0.1 deg | 1400, 4748 km^2 | fetched from Zenodo |
+| `distance_to_land` | 0.05, 0.01 deg | 0, 1400, 4748 km^2 | fetched from Zenodo |
+| `land_fraction` | 0.05, 0.01 deg | 0 km^2 | fetched from Zenodo |
 
 `grid_path(kind, resolution_deg, min_island_area_km2)` resolves a grid file,
 searching in order: an explicit path, `$LANDMETRICS_DATA_DIR` (colon-separated
@@ -97,6 +99,9 @@ directory list), the bundled copy, the local cache
 a Zenodo download into the cache. `landmetrics list` shows every known grid
 and where it currently resolves; `landmetrics fetch <kind> --resolution-deg
 ... --min-island-area-km2 ...` downloads one explicitly.
+
+The non-bundled grids are hosted in a single Zenodo deposit:
+[10.5281/zenodo.21959508](https://doi.org/10.5281/zenodo.21959508).
 
 The two bundled grids were generated from GSHHG scale "f" (full resolution),
 levels 1 (mainland and islands) and 5 (Antarctica, ice-shelf-front
@@ -122,4 +127,5 @@ landmetrics fetch land_fraction --resolution-deg 0.01 --min-island-area-km2 0
 ## Citing
 
 See `CITATION.cff`. A software DOI is minted by Zenodo on release; see the
-project's GitHub releases page for the current record.
+project's GitHub releases page for the current record. The grid data itself
+is archived separately: [10.5281/zenodo.21959508](https://doi.org/10.5281/zenodo.21959508).

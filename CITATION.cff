@@ -2,7 +2,7 @@ cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
 title: landmetrics
 type: software
-version: 0.1.0
+version: 1.0.0
 authors:
   - family-names: Tsukada
     given-names: Taiga
@@ -29,3 +29,10 @@ references:
     end: 8743
     year: 1996
     doi: 10.1029/96JB00104
+  - type: dataset
+    authors:
+      - family-names: Tsukada
+        given-names: Taiga
+    title: "landmetrics grid data: GSHHG-derived distance-to-coastline and land-fraction rasters (0.01deg-0.1deg)"
+    year: 2026
+    doi: 10.5281/zenodo.21959508

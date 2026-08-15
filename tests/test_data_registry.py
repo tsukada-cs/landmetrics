@@ -66,7 +66,7 @@ def test_grid_not_found_raises_with_useful_message(monkeypatch, tmp_path):
 def test_no_network_call_without_zenodo_record(monkeypatch, tmp_path):
     monkeypatch.setenv("LANDMETRICS_DATA_DIR", "")
     monkeypatch.setenv("LANDMETRICS_CACHE_DIR", str(tmp_path / "empty_cache2"))
-    assert data.ZENODO_RECORD_ID is None
+    monkeypatch.setattr(data, "ZENODO_RECORD_ID", None)
 
     def _fail_urlopen(*args, **kwargs):
         raise AssertionError("should never attempt a network request")
@@ -74,6 +74,25 @@ def test_no_network_call_without_zenodo_record(monkeypatch, tmp_path):
     monkeypatch.setattr("urllib.request.urlopen", _fail_urlopen)
     with pytest.raises(GridNotFoundError):
         data.grid_path("distance_to_land", 0.05, 1400.0, download=True)
+
+
+def test_download_url_uses_configured_record_id(monkeypatch, tmp_path):
+    monkeypatch.setenv("LANDMETRICS_DATA_DIR", "")
+    monkeypatch.setenv("LANDMETRICS_CACHE_DIR", str(tmp_path / "empty_cache3"))
+    assert data.ZENODO_RECORD_ID == "21959508"
+
+    spec = next(g for g in data.available_grids() if not g.bundled)
+    requested_urls = []
+
+    def _fake_urlopen(url, *args, **kwargs):
+        requested_urls.append(url)
+        raise AssertionError("stop before an actual network request")
+
+    monkeypatch.setattr("urllib.request.urlopen", _fake_urlopen)
+    with pytest.raises(AssertionError):
+        data.grid_path(spec.kind, spec.resolution_deg, spec.min_island_area_km2, download=True)
+
+    assert requested_urls == [f"https://zenodo.org/records/21959508/files/{spec.filename}?download=1"]
 
 
 def test_malformed_grid_missing_variable_raises(tmp_path):

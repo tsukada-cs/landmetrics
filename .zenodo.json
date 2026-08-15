@@ -21,6 +21,11 @@
       "identifier": "10.1029/96JB00104",
       "relation": "isDerivedFrom",
       "resource_type": "publication-article"
+    },
+    {
+      "identifier": "10.5281/zenodo.21959508",
+      "relation": "isSupplementedBy",
+      "resource_type": "dataset"
     }
   ]
 }

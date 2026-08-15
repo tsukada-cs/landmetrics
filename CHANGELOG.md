@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.1.0
+## 1.0.0
 
 Initial release.
 
@@ -18,3 +18,7 @@ Initial release.
   finer grids are fetched from Zenodo on first use and cached locally.
 - `landmetrics` command-line tool: `query`, `fraction`, `list`, `info`,
   `fetch`.
+- Published the non-bundled grid data to Zenodo
+  ([10.5281/zenodo.21959508](https://doi.org/10.5281/zenodo.21959508)) and
+  wired `ZENODO_RECORD_ID` up to it, so `grid_path(..., download=True)` and
+  `landmetrics fetch` now actually resolve.

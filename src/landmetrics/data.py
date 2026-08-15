@@ -43,11 +43,11 @@ __all__ = [
     "cache_dir",
 ]
 
-# Not yet published -- filled in once the data deposit exists (see the
-# package README's release notes). Left None rather than guessed: with no
-# record id, grid_path(..., download=True) raises GridNotFoundError
+# Data deposit: https://zenodo.org/records/21959508 (DOI 10.5281/zenodo.21959508).
+# None is still a valid value here (e.g. a fork without its own deposit) --
+# with no record id, grid_path(..., download=True) raises GridNotFoundError
 # instead of attempting a request to a nonexistent record.
-ZENODO_RECORD_ID: str | None = None
+ZENODO_RECORD_ID: str | None = "21959508"
 _ZENODO_BASE_URL = "https://zenodo.org/records/{record_id}/files/{filename}?download=1"
 
 _BUNDLED_DIR = "data"
@@ -168,31 +168,11 @@ GRIDS: tuple[GridSpec, ...] = (
     ),
     GridSpec(
         "land_fraction",
-        0.1,
-        1400.0,
-        "land_fraction_0.1deg_gt1400km2.nc",
-        11669582,
-        "8f75a031f69e15e754590f3994c39d7e50215c39c4c8a966e1300c11a609ad00",
-        bundled=False,
-        radii_km=(100.0, 200.0, 300.0, 400.0, 500.0, 600.0),
-    ),
-    GridSpec(
-        "land_fraction",
         0.05,
         0.0,
         "land_fraction_0.05deg_gt0km2.nc",
         20900653,
         "ecf4a2c34bcdef5fe4d016bb359b202c6a1a0ace8c8156e14ca679762c042bb6",
-        bundled=False,
-        radii_km=(100.0, 200.0, 300.0, 400.0, 500.0, 600.0),
-    ),
-    GridSpec(
-        "land_fraction",
-        0.05,
-        1400.0,
-        "land_fraction_0.05deg_gt1400km2.nc",
-        20350940,
-        "b9423e1850295c6d8c5c748782a578b153268d5ef523ac1a2caa990f54a71d63",
         bundled=False,
         radii_km=(100.0, 200.0, 300.0, 400.0, 500.0, 600.0),
     ),

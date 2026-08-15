@@ -57,7 +57,13 @@ def test_info_command(tiny_distance_grid, capsys):
     assert "distance_to_land" in out
 
 
-def test_fetch_without_zenodo_record_fails_cleanly(capsys):
+def test_fetch_without_zenodo_record_fails_cleanly(capsys, monkeypatch, tmp_path):
+    from landmetrics import data
+
+    monkeypatch.setenv("LANDMETRICS_DATA_DIR", "")
+    monkeypatch.setenv("LANDMETRICS_CACHE_DIR", str(tmp_path / "empty_cache"))
+    monkeypatch.setattr(data, "ZENODO_RECORD_ID", None)
+
     code = _run(["fetch", "distance_to_land", "--resolution-deg", "0.05", "--min-island-area-km2", "1400"])
     assert code == 1
     err = capsys.readouterr().err
